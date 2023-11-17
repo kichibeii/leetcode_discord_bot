@@ -84,7 +84,14 @@ func main() {
 	}
 
 	// print message to discord
-	keyBot, err := os.ReadFile("keyBot")
+	if len(os.Args) < 2 {
+		fmt.Println("Usage: ./main <configFilePath>")
+		return
+	}
+
+	configFilePath := os.Args[1]
+
+	keyBot, err := os.ReadFile(configFilePath)
 	if err != nil {
 		fmt.Println("err", err)
 		return
