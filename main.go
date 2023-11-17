@@ -88,7 +88,9 @@ func main() {
 		fmt.Println("err", err)
 		return
 	}
-	discord, err := discordgo.New("Bot " + string(keyBot))
+	keyAuth := fmt.Sprintf("Bot %s", string(keyBot))
+	fmt.Println(keyAuth)
+	discord, err := discordgo.New(keyAuth)
 	if err != nil {
 		fmt.Println(err)
 		return
