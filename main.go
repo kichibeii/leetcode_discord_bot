@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"math/rand"
 	"os"
+	"strings"
 	"time"
 
 	"github.com/bwmarrin/discordgo"
@@ -89,7 +90,7 @@ func main() {
 		return
 	}
 	keyAuth := fmt.Sprintf("Bot %s", string(keyBot))
-	fmt.Println(keyAuth)
+	keyAuth = strings.TrimSuffix(keyAuth, "\n")
 	discord, err := discordgo.New(keyAuth)
 	if err != nil {
 		fmt.Println(err)
