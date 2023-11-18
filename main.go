@@ -46,9 +46,18 @@ const (
 )
 
 func main() {
+
+	if len(os.Args) < 2 {
+		fmt.Println("Usage: ./main <configFilePath>")
+		return
+	}
+
+	configFilePath := os.Args[1]
+	filePath := os.Args[2]
+
 	// reading file
 	var data Data
-	content, _ := os.ReadFile("question_list.json")
+	content, _ := os.ReadFile(filePath)
 
 	err := json.Unmarshal(content, &data)
 	if err != nil {
@@ -84,12 +93,6 @@ func main() {
 	}
 
 	// print message to discord
-	if len(os.Args) < 2 {
-		fmt.Println("Usage: ./main <configFilePath>")
-		return
-	}
-
-	configFilePath := os.Args[1]
 
 	keyBot, err := os.ReadFile(configFilePath)
 	if err != nil {
