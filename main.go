@@ -55,6 +55,25 @@ func main() {
 	configFilePath := os.Args[1]
 	filePath := os.Args[2]
 
+	difficulty := ""
+	if len(os.Args) == 4 {
+		difficulty = os.Args[3]
+
+	}
+
+	var difficultySelect int
+
+	switch difficulty {
+	case "1":
+		difficultySelect = DifficultyEasy
+	case "2":
+		difficultySelect = DifficultyMedium
+	case "3":
+		difficultySelect = DifficultyHard
+	default:
+		difficultySelect = DifficultyEasy
+	}
+
 	// reading file
 	var data Data
 	content, _ := os.ReadFile(filePath)
@@ -71,19 +90,18 @@ func main() {
 		rand.Seed(time.Now().Unix()) // initialize global pseudo random generator
 		key := rand.Intn(len(data.Data))
 		tempData = data.Data[key]
-		if !tempData.PaidOnly && tempData.Difficulty.Level == DifficultyEasy {
+		if !tempData.PaidOnly && tempData.Difficulty.Level == difficultySelect {
 			data.Data = append(data.Data[:key], data.Data[key+1])
 			loop = false
 		}
 	}
 
 	link := "https://leetcode.com/problems/" + tempData.Stat.QuestionTitleSlug
-	difficulty := ""
 
 	now := time.Now()
 	dateString := now.Format("2006-01-02")
 
-	switch tempData.Difficulty.Level {
+	switch difficultySelect {
 	case DifficultyMedium:
 		difficulty = "medium"
 	case DifficultyEasy:
